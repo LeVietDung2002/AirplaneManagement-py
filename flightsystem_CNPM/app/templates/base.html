@@ -1,0 +1,38 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/booktickets.css')}} ">
+    <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+
+    <title>{% block title %}Hệ Thống Quản Lý Chuyến Bay{% endblock %}</title>
+</head>
+
+<body>
+    <div class="header">
+        <h1>HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
+    </div>
+    <ul class="menu">
+        <li><a href="{{url_for('home')}}">Trang Chủ</a></li>
+        <li><a href="{{url_for('login')}}">Đăng Nhập</a></li>
+        <li><a href="{{url_for('booktickets')}}">Đặt Vé</a></li>
+        <li><a href="{{url_for('sellticket')}}">Bán Vé</a></li>
+        <li><a href="{{url_for('flight_management')}}">Quản Lý Chuyến Bay</a></li>
+        <li><a href="{{url_for('flight_route_Management')}}">Quản Lý Tuyến Bay</a></li>
+        <li><a href="{{url_for('report')}}">Thông Kê Báo Cáo</a></li>
+    </ul>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="footer">
+        <p>Bản quyền thuộc về nhóm 16</p>
+    </div>
+</body>
+
+</html>

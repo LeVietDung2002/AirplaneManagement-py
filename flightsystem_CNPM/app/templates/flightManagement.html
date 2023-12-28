@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/booktickets.css')}} ">
+    <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/flightManagement.js')}}"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
+    </div>
+    <ul class="menu">
+        <li><a href="{{url_for('home')}}">Trang Chủ</a></li>
+        <li><a href="{{url_for('login')}}">Đăng Nhập</a></li>
+        <li><a href="{{url_for('booktickets')}}">Đặt Vé</a></li>
+        <li><a href="{{url_for('sellticket')}}">Bán Vé</a></li>
+        <li><a class="active" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a></li>
+        <li><a href="#Flight_route_Management">Quản Lý Tuyến Bay</a></li>
+        <li><a href="#report">Thông Kê Báo Cáo</a></li>
+    </ul>
+    <div class="main">
+        <div class="flightManagement">
+            <!-- Add Flight Form -->
+            <h1>Thêm Chuyến Bay</h1>
+            <form action="{{ url_for('flightManagement') }}" method="post">
+                <label for="flight_code">Mã Chuyến Bay:</label>
+                <input type="text" id="flight_code" name="flight_code" required>
+
+                <label for="departure">Điểm Xuất Phát:</label>
+                <input type="text" id="departure" name="departure" required>
+
+                <label for="destination">Điểm Đến:</label>
+                <input type="text" id="destination" name="destination" required>
+
+                <label for="departure_date">Ngày Khởi Hành:</label>
+                <input type="date" id="departure_date" name="departure_date" required>
+
+                <button type="submit">Thêm Chuyến Bay</button>
+            </form>
+        </div>
+        <div> <select id="delete_flight_code" name="delete_flight_code">
+                    <!-- Option sẽ được thêm bằng JavaScript -->
+                </select>
+        </div>
+
+
+                <button type="button" onclick="addFlight()">Thêm Chuyến Bay</button>
+                <button type="button" onclick="editFlight()">Sửa Chuyến Bay</button>
+                <button type="button" onclick="deleteFlight()">Xóa Chuyến Bay</button>
+        <div class="row">
+    <div class="col-sm-12">
+        <table id="flightTable" class="table table-bordered table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>Flight ID</th>
+                    <th>Departure Airport</th>
+                    <th>Arrival Airport</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Available Seats</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                    <tr>
+                        <td>{{ flight.flightID }}</td>
+                        <td>{{ flight.departureAirport }}</td>
+                        <td>{{ flight.arrivalAirport }}</td>
+                        <td>{{ flight.departureTime }}</td>
+                        <td>{{ flight.arrivalTime }}</td>
+                        <td>{{ flight.availableSeats }}</td>
+                        <td>{{ flight.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    </div>
+    <div class="footer">
+        <p>Bản quyền thuộc về nhóm 16</p>
+    </div>
+<script>
+
+  <script src="{{ url_for('static', filename='js/flightManagement.js') }}"></script>
+
+</script>
+
+</body>
+
+</html>
