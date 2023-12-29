@@ -1,22 +1,27 @@
+-- Insert data into the ReportRevenue table
+INSERT INTO ReportRevenue VALUES
+    ('R001', 'Res001', 'C001', 'F001', 120.00, 10.00, 5.00, 120.00, 125.00, '2023-01-01 09:00:00'),
+    ('R002', 'Res002', 'C002', 'F002', 180.00, 15.00, 18.00, 180.00, 177.00, '2023-02-01 13:00:00');
+
 -- Insert data into the Customer table
 INSERT INTO Customer VALUES
-    ('C001', 'John Doe', 'john.doe@example.com', '1234567890', '123 Main St'),
-    ('C002', 'Jane Smith', 'jane.smith@example.com', '9876543210', '456 Oak St');
+    ('C001', 'Nguyễn Văn A', 'nguyen.van.a@example.com', '0123456789', '123 Đường ABC'),
+    ('C002', 'Trần Thị B', 'tran.thi.b@example.com', '0987654321', '456 Đường XYZ');
 
 -- Insert data into the Employee table
 INSERT INTO Employee VALUES
-    ('E001', 'Alice Johnson', 'alice.johnson@example.com', '1112223333', 'Manager'),
-    ('E002', 'Bob Williams', 'bob.williams@example.com', '4445556666', 'Staff');
+    ('E001', 'Phạm Văn C', 'pham.van.c@example.com', '1112223333', 'Quản Lý'),
+    ('E002', 'Lê Thị D', 'le.thi.d@example.com', '4445556666', 'Nhân Viên');
 
 -- Insert data into the FlightDetail table
 INSERT INTO FlightDetail VALUES
-    ('F001', 'Airport1', 'Airport2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 150.00),
-    ('F002', 'Airport3', 'Airport4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 200.00);
+    ('F001', 'Sân Bay 1', 'Sân Bay 2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 150.00),
+    ('F002', 'Sân Bay 3', 'Sân Bay 4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 200.00);
 
 -- Insert data into the Promotion table
 INSERT INTO Promotion VALUES
-    ('P001', 'Summer Discount', 0.1, '2023-06-01 00:00:00', '2023-08-31 23:59:59'),
-    ('P002', 'Winter Sale', 0.2, '2023-12-01 00:00:00', '2023-12-31 23:59:59');
+    ('P001', 'Khuyến Mãi Mùa Hè', 0.1, '2023-06-01 00:00:00', '2023-08-31 23:59:59'),
+    ('P002', 'Giảm Giá Mùa Đông', 0.2, '2023-12-01 00:00:00', '2023-12-31 23:59:59');
 
 -- Insert data into the Price table
 INSERT INTO Price VALUES
@@ -40,13 +45,13 @@ INSERT INTO Payment VALUES
 
 -- Insert data into the Review table
 INSERT INTO Review VALUES
-    ('R001', 'Res001', 4, 'Great service!', 'C001', '2023-01-02 11:00:00'),
-    ('R002', 'Res002', 5, 'Excellent flight!', 'C002', '2023-02-02 15:00:00');
+    ('R001', 'Res001', 4, 'Dịch vụ tuyệt vời!', 'C001', '2023-01-02 11:00:00'),
+    ('R002', 'Res002', 5, 'Chuyến bay xuất sắc!', 'C002', '2023-02-02 15:00:00');
 
 -- Insert data into the Schedule table
 INSERT INTO Schedule VALUES
-    ('F001', 'Airport1', 'Airport2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 'Airport3'),
-    ('F002', 'Airport3', 'Airport4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 'Airport5');
+    ('F001', 'Sân Bay 1', 'Sân Bay 2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 'Sân Bay 3'),
+    ('F002', 'Sân Bay 3', 'Sân Bay 4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 'Sân Bay 5');
 
 -- Insert data into the Reservation table
 INSERT INTO Reservation VALUES
@@ -65,8 +70,8 @@ INSERT INTO Invoice VALUES
 
 -- Insert data into the Route table
 INSERT INTO Route VALUES
-    ('Route001', 'Airport1', 'Airport2', 500.00, 2.5),
-    ('Route002', 'Airport3', 'Airport4', 600.00, 3.0);
+    ('Route001', 'Sân Bay 1', 'Sân Bay 2', 500.00, 2.5),
+    ('Route002', 'Sân Bay 3', 'Sân Bay 4', 600.00, 3.0);
 
 -- Insert data into the Aircraft table
 INSERT INTO Aircraft VALUES

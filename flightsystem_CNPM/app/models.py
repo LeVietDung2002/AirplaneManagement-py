@@ -112,7 +112,10 @@ class Aircraft(db.Model):
     model = db.Column(db.String(255))
     capacity = db.Column(db.Integer)
     manufacturer = db.Column(db.String(255))
-
+class ReportRevenue(db.Model):
+    reportID = db.Column(db.String(50), primary_key=True)
+    totalRevenue = db.Column(db.Float)
+    reportDateTime = db.Column(db.DateTime)
 # Define the rest of the models...
 
 # Example of how to create the tables

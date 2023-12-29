@@ -145,3 +145,18 @@ CREATE TABLE Aircraft (
     capacity INT,
     manufacturer VARCHAR(255)
 );
+CREATE TABLE ReportRevenue (
+    reportID VARCHAR(50) PRIMARY KEY,
+    reservationID VARCHAR(50),
+    customerID VARCHAR(50),
+    flightID VARCHAR(50),
+    price DOUBLE,
+    taxes DOUBLE,
+    discount DOUBLE,
+    amountPaid DOUBLE,
+    totalRevenue DOUBLE,
+    reportDateTime DATETIME,
+    FOREIGN KEY (reservationID) REFERENCES Reservation(reservationID),
+    FOREIGN KEY (customerID) REFERENCES Customer(customerID),
+    FOREIGN KEY (flightID) REFERENCES FlightDetail(flightID)
+);
