@@ -2,6 +2,8 @@ body {
     margin: 0;
     padding: 0px 10px;
     font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #3a8cd1, #b0b0b0);
+    color: #333333;
 }
 
 .header {
@@ -55,6 +57,7 @@ body {
     background-color: white;
     border: 2px solid black;
     margin: 10px 0px;
+    width: 100%; /* Make it 100% wide */
 }
 
 /*==BOOK TICKETS SECTION==*/
@@ -72,7 +75,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 1.8vw; /* Giảm kích thước font chung */
+    font-size: 1.8vw;
 }
 
 .departure,
@@ -84,7 +87,7 @@ body {
 .info select {
     width: 20vw;
     height: 40px;
-    font-size: 1.6vw; /* Giảm kích thước font trong dropdown */
+    font-size: 1.6vw;
 }
 
 .find {
@@ -103,7 +106,7 @@ body {
 
 #date {
     width: 30vw;
-    font-size: 1.8vw; /* Giảm kích thước font của ngày */
+    font-size: 1.8vw;
 }
 
 .title > h1,
@@ -111,28 +114,29 @@ body {
     text-decoration: underline;
     padding-left: 1vw;
 }
+
 /* Thêm style cho các phần thông tin hàng dọc */
 .booking-info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 20px;
-    border: 2px solid black; /* Add border style */
-    padding: 20px; /* Add padding for spacing inside the border */
+    border: 2px solid black;
+    padding: 20px;
 }
 
 .booking-info label {
     margin-bottom: 5px;
     font-weight: bold;
-    display: block; /* Make labels block-level */
+    display: block;
 }
 
 .booking-info input,
 .booking-info select {
-    width: 20vw;
+    width: 100%; /* Make inputs and selects 100% wide */
     height: 40px;
     font-size: 1.6vw;
-    margin-bottom: 10px; /* Add margin to separate inputs */
+    margin-bottom: 10px;
 }
 
 #bookTicketButton {
@@ -143,6 +147,7 @@ body {
     padding: 10px;
     width: 100%;
 }
+
 /*==================*/
 @media screen and (max-width: 600px) {
     .info {
@@ -156,6 +161,10 @@ body {
     }
 
     .find > button {
-        width: 15vw;
+        width: 100%; /* Make the button 100% wide on smaller screens */
     }
+}
+#date {
+    width: 150px; /* Điều chỉnh kích thước theo ý muốn */
+    font-size: 18px; /* Điều chỉnh kích thước font chữ */
 }

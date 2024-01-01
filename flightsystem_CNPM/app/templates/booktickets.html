@@ -5,131 +5,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/booktickets.css')}} ">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/booktickets.css')}}">
     <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
-
+    <!-- Add any additional scripts or stylesheets you need -->
 </head>
 
 <body>
-    <div class="header">
-        <h1>HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
-    </div>
-    <ul class="menu">
-        <li><a href="{{url_for('home')}}">Trang Chủ</a></li>
-        <li><a href="{{url_for('login')}}">Đăng Nhập</a></li>
-        <li><a class="active" href="{{url_for('booktickets')}}">Đặt Vé</a></li>
-        <li><a href="{{url_for('sellticket')}}">Bán Vé</a></li>
-        <li><a href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a></li>
-        <li><a href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a></li>
-		<li><a href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a></li>
-    </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{url_for('home')}}">Hệ thống quản lý chuyến bay.</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('login')}}">Đăng Nhập</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('booktickets')}}">Đặt Vé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('sellticket')}}">Bán Vé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <div class="main">
-        <div class="find-flight">
-            <div class="title">
-                <h1>Tìm chuyến bay</h1>
-            </div>
-            <div class="info">
-                <div class="departure">
-                    <p>Từ</p>
-                    <p>
-                        <select name="from" id="from">
-                            <option value="TP HCM">TPHCM (SGN)</option>
-                            <option value="Ha Noi">Hà Nội (HAN)</option>
-                            <option value="Da Lat">Đà Lạt (DLI)</option>
-                            <option value="Da Nang">Đà Nẵng (DAD)</option>
-                        </select>
-                    </p>
-                </div>
-                <div class="destination">
-                    <p>Đến</p>
-                    <p>
-                        <select name="to" id="to">
-                            <option value="TP HCM">TPHCM (SGN)</option>
-                            <option value="Ha Noi">Hà Nội (HAN)</option>
-                            <option value="Da Lat">Đà Lạt (DLI)</option>
-                            <option value="Da Nang">Đà Nẵng (DAD)</option>
-                        </select>
-                    </p>
-                </div>
-                <div class="time">
-                    <p>Ngày đi</p>
-                    <p>
-                        <input type="date" id="date" name="date">
-                    </p>
-                </div>
-            </div>
+    <div class="container mt-4">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
+        </div>
 
-            <div class="find">
-                <button>Tìm</button>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="find-flight">
+                    <div class="title">
+                        <h2>Tìm chuyến bay</h2>
+                    </div>
+                    <div class="info">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="from">Từ</label>
+                                    <select class="form-control" id="from" name="from">
+                                        <option value="TP HCM">TPHCM (SGN)</option>
+                                        <option value="Ha Noi">Hà Nội (HAN)</option>
+                                        <option value="Da Lat">Đà Lạt (DLI)</option>
+                                        <option value="Da Nang">Đà Nẵng (DAD)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="to">Đến</label>
+                                    <select class="form-control" id="to" name="to">
+                                        <option value="TP HCM">TPHCM (SGN)</option>
+                                        <option value="Ha Noi">Hà Nội (HAN)</option>
+                                        <option value="Da Lat">Đà Lạt (DLI)</option>
+                                        <option value="Da Nang">Đà Nẵng (DAD)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="date">Ngày đi</label>
+                                    <input type="date" class="form-control" id="date" name="date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="find">
+                        <button class="btn btn-primary">Tìm</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="list-flight">
-    <h1>Danh sách các chuyến bay</h1>
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Chọn</th>
-                    <th>Mã Chuyến Bay</th>
-                    <th>Điểm Xuất Phát</th>
-                    <th>Điểm Đến</th>
-                    <th>Ngày Khởi Hành</th>
-                    <!-- Thêm các cột khác cần hiển thị -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dữ liệu chuyến bay sẽ được thêm vào đây từ code server -->
-                <tr>
-                    <td><input type="checkbox" name="flightCheckbox" value="flight1"></td>
-                    <td>CB001</td>
-                    <td>TPHCM</td>
-                    <td>Hà Nội</td>
-                    <td>2023-12-25</td>
-                    <!-- Thêm các ô dữ liệu khác -->
-                </tr>
-                <!-- Thêm các dòng dữ liệu khác -->
-            </tbody>
-        </table>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="list-flight">
+                    <h2>Danh sách các chuyến bay</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Chọn</th>
+                                    <th>Mã Chuyến Bay</th>
+                                    <th>Điểm Xuất Phát</th>
+                                    <th>Điểm Đến</th>
+                                    <th>Ngày Khởi Hành</th>
+                                    <!-- Thêm các cột khác cần hiển thị -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dữ liệu chuyến bay sẽ được thêm vào đây từ code server -->
+                                <tr>
+                                    <td><input type="checkbox" name="flightCheckbox" value="flight1"></td>
+                                    <td>CB001</td>
+                                    <td>TPHCM</td>
+                                    <td>Hà Nội</td>
+                                    <td>2023-12-25</td>
+                                    <!-- Thêm các ô dữ liệu khác -->
+                                </tr>
+                                <!-- Thêm các dòng dữ liệu khác -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                  <div class="booking-info">
+                    <h2>Đặt vé</h2>
+                    <form action="{{ url_for('thanhToan') }}" method="post">
+                        <div class="form-group">
+                            <label for="bookingID">Booking ID:</label>
+                            <input type="text" class="form-control" id="bookingID" name="bookingID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerID">Customer ID:</label>
+                            <input type="text" class="form-control" id="customerID" name="customerID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="flightClass">Flight Class:</label>
+                            <select class="form-control" id="flightClass" name="flightClass" required>
+                                <option value="class1">Hạng 1</option>
+                                <option value="class2">Hạng 2</option>
+                                <!-- Thêm các lựa chọn khác nếu cần -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method:</label>
+                            <select class="form-control" id="paymentMethod" name="paymentMethod" required>
+                                <option value="online">Vnpay</option>
+                                <option value="offline">Thanh toán trực tiếp</option>
+                                <!-- Thêm các lựa chọn khác nếu cần -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="statusLabel">Trạng thái:</label>
+                            <span>Đang chờ xác nhận</span>
+                        </div>
+                        <!-- Other form fields go here -->
+
+                        <!-- Button to submit the form -->
+                        <button type="submit" class="btn btn-primary">Đặt Vé</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-    </div>
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>Bản quyền © 2023 Nhóm 16.</p>
+    </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
- <h1> Đặt vé</h1>
-    <div class="booking-info">
-    <label for="bookingID">Booking ID:</label>
-    <input type="text" id="bookingID" name="bookingID" required>
-
-    <label for="customerID">Customer ID:</label>
-    <input type="text" id="customerID" name="customerID" required>
-
-    <label for="flightClass">Flight Class:</label>
-    <select id="flightClass" name="flightClass" required>
-        <option value="class1">Hạng 1</option>
-        <option value="class2">Hạng 2</option>
-        <!-- Thêm các lựa chọn khác nếu cần -->
-    </select>
-
-    <label for="paymentMethod">Payment Method:</label>
-    <select id="paymentMethod" name="paymentMethod" required>
-        <option value="online">Vnpay</option>
-        <option value="offline">thanh toán trực tiếp</option>
-        <!-- Thêm các lựa chọn khác nếu cần -->
-    </select>
-
-    <label >Trạng thái:</label>
-    <span id="statusLabel">Đang chờ xác nhận</span>
-
-        <button type="submit" id="bookTicketButton">Đặt Vé</button>
-
-</div>
-
-    <div class="footer">
-        <p>Bản quyền thuộc về nhóm 16</p>
-    </div>
 </body>
 
 </html>

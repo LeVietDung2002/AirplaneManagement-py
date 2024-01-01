@@ -1,67 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sellTicket.css')}}">
-	<script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}} "></script>
+    <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+    <!-- Add any additional scripts or stylesheets you need -->
 </head>
+
 <body>
-    <div class="header">
-        <h1>HỆ THỐNG QUẢN LÝ CHUYỂN BAY</h1>
-    </div>
-
-    <ul class="menu">
-        <li><a href="{{url_for('home')}}">Trang Chủ</a></li>
-        <li><a href="{{url_for('login')}}">Đăng Nhập</a></li>
-        <li><a href="{{url_for('booktickets')}}">Đặt Vé</a></li>
-        <li><a class="active" href="{{url_for('sellticket')}}">Bán Vé</a></li>
-        <li><a href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a></li>
-        <li><a href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a></li>
-		<li><a href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a></li>
-    </ul>
-  <div class="title">
-            <h1>Bán vé</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{url_for('home')}}">Hệ thống quản lý chuyến bay.</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('login')}}">Đăng Nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('booktickets')}}">Đặt Vé</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('sellticket')}}">Bán Vé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
+                </li>
+            </ul>
         </div>
-    <div class="main">
+    </nav>
 
+    <div class="container mt-4">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
+        </div>
 
-        <section>
-            <form action="/process_ticket_sale" method="post" id="ticketForm">
-                <!-- Dropdown for selecting the flight -->
-                <label for="flight">Chọn chuyến bay:</label>
-                <select id="flight" name="flight" required>
-                    <option value="flight1">Chuyến bay 1</option>
-                    <option value="flight2">Chuyến bay 2</option>
-                    <!-- Add more flight options based on your data -->
-                </select>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="title">
+                    <h2>Bán vé</h2>
+                </div>
 
-                <!-- Input for passenger information -->
-                <label for="passengerName">Họ và tên hành khách:</label>
-                <input type="text" id="passengerName" name="passengerName" required>
-<!-- Radio buttons for ticket class -->
-                <div class="ticket-class">
-                <div class="ticket-option">
-                        <input type="radio" id="class1" name="ticketClass" value="class1" required>
-                        <label for="class1" class="ticket-label">Hạng 1</label>
-                    </div>
+                <div class="main">
+                    <section>
+                        <form action="/process_ticket_sale" method="post" id="ticketForm">
+                            <!-- Dropdown for selecting the flight -->
+                            <div class="form-group">
+                                <label for="flight">Chọn chuyến bay:</label>
+                                <select class="form-control" id="flight" name="flight" required>
+                                    <option value="flight1">Chuyến bay 1</option>
+                                    <option value="flight2">Chuyến bay 2</option>
+                                    <!-- Add more flight options based on your data -->
+                                </select>
+                            </div>
 
-                    <div class="ticket-option">
-                        <input type="radio" id="class2" name="ticketClass" value="class2" required>
-                        <label for="class2" class="ticket-label">Hạng 2</label>
-                    </div>
+                            <!-- Input for passenger information -->
+                            <div class="form-group">
+                                <label for="passengerName">Họ và tên hành khách:</label>
+                                <input type="text" class="form-control" id="passengerName" name="passengerName" required>
+                            </div>
+
+                            <!-- Radio buttons for ticket class -->
+                            <div class="form-group">
+                                <label>Chọn hạng vé:</label>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="class1" name="ticketClass" value="class1" required>
+                                    <label class="form-check-label" for="class1">Hạng 1</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="class2" name="ticketClass" value="class2" required>
+                                    <label class="form-check-label" for="class2">Hạng 2</label>
+                                </div>
+                            </div>
+
+                            <!-- Input for ticket price -->
+                            <div class="form-group">
+                                <label for="ticketPrice">Giá vé:</label>
+                                <input type="text" class="form-control" id="ticketPrice" name="ticketPrice" required readonly>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary">Bán Vé</button>
+                        </form>
+                    </section>
+                </div>
             </div>
-
-                <!-- Input for ticket price -->
-                <label for="ticketPrice">Giá vé:</label>
-                <input type="text" id="ticketPrice" name="ticketPrice" required readonly>
-
-                <!-- Submit button -->
-                <button type="submit">Bán Vé</button>
-            </form>
-        </section>
+        </div>
     </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>Bản quyền © 2023 Nhóm 16.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
     <script>
         // Function to update ticket price based on selected class
@@ -91,10 +139,6 @@
         // Call the function initially to set default price
         updateTicketPrice();
     </script>
-
-<div class="footer">
-		<p>Bản quyền © 2023 Nhóm 16.</p>
-	</div>
-
 </body>
+
 </html>
