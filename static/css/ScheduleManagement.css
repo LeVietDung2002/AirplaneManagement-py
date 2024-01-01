@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+   background: linear-gradient(to bottom, #ffff, #b0b0b0); /* Adjusted background gradient */
+    color: #333333; /* Darker text color */
+}
+
+.header {
+	background-color: #fff;
+	padding: 20px;
+	text-align: center;
+	border: 2px solid black;
+}
+.footer {
+    background-color: #fff;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid black;
+}
+.menu {
+    list-style-type: none;
+    padding: 0;
+    background-color: white;
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+.menu li {
+    float: left;
+}
+
+.menu li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    margin: 5px;
+    border: 1px solid #000;
+}
+
+.menu li a:hover:not(.active) {
+    background-color: #b8b8b8;
+}
+
+.menu li a.active {
+    color: white;
+    background-color: black;
+    font-weight: bolder;
+}
+
+.main {
+    padding: 16px;
+    background-color: white;
+    border: 2px solid black;
+    margin: 10px 0px;
+}
+
+form {
+    margin-bottom: 20px;
+    border: 2px solid #000; /* Added border to the form */
+    padding: 20px; /* Added padding for spacing inside the border */
+}
+
+form h3 {
+    margin-bottom: 10px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #000; /* Added border to form elements */
+}
+
+form button {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #333;
+}
+/* Additional styles for table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #b8b8b8;
+    font-weight: bold;
+}

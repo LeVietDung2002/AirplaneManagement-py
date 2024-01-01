@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/reportRevenue.css')}}">
+	<script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}} "></script>
+</head>
+<body>
+    <div class="header">
+        <h1>HỆ THỐNG QUẢN LÝ CHUYỂN BAY</h1>
+    </div>
+
+    <ul class="menu">
+        <li><a href="{{url_for('home')}}">Trang Chủ</a></li>
+        <li><a href="{{url_for('login')}}">Đăng Nhập</a></li>
+        <li><a href="{{url_for('booktickets')}}">Đặt Vé</a></li>
+        <li><a href="{{url_for('sellticket')}}">Bán Vé</a></li>
+        <li><a href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a></li>
+        <li><a href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a></li>
+		<li><a class="active" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a></li>
+    </ul>
+  <div class="title">
+            <h1>Báo cáo doanh thu</h1>
+        </div>
+    <div class="main">
+
+
+        <section>
+          <h2>Báng báo cáo doanh thu</h2>
+    <form action="/add_report_revenue" method="post">
+        <label for="reportID">Mã Báo cáo:</label>
+        <input type="text" id="reportID" name="reportID" required><br>
+
+        <label for="reservationID">Mã Đặt vé:</label>
+        <input type="text" id="reservationID" name="reservationID" required><br>
+
+        <label for="customerID">Mã Khách hàng:</label>
+        <input type="text" id="customerID" name="customerID" required><br>
+
+        <label for="flightID">Mã Chuyến bay:</label>
+        <input type="text" id="flightID" name="flightID" required><br>
+
+        <label for="price">Giá vé:</label>
+        <input type="number" id="price" name="price" required><br>
+
+        <label for="taxes">Thuế:</label>
+        <input type="number" id="taxes" name="taxes" required><br>
+
+        <label for="discount">Giảm giá:</label>
+        <input type="number" id="discount" name="discount" required><br>
+
+        <label for="amountPaid">Số tiền đã thanh toán:</label>
+        <input type="number" id="amountPaid" name="amountPaid" required><br>
+
+        <label for="totalRevenue">Tổng Doanh thu:</label>
+        <input type="number" id="totalRevenue" name="totalRevenue" required><br>
+
+        <label for="reportDateTime">Ngày Báo cáo:</label>
+        <input type="datetime-local" id="reportDateTime" name="reportDateTime" required><br>
+
+        <input type="submit" value="Thêm Báo cáo">
+    </form>
+        </section>
+    </div>
+
+    <script>
+
+    </script>
+
+<div class="footer">
+		<p>Bản quyền © 2023 Nhóm 16.</p>
+	</div>
+
+</body>
+</html>
