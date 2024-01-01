@@ -1,13 +1,23 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+import os
+from models import db, FlightDetail, Customer, Admin, ConfirmationToken
+from flask_mail import Mail, Message
+from flask_mysqldb import MySQL
 
-db = SQLAlchemy()
+
+
+
+from flask_mail import Mail
+mail = Mail()
+
 flightapp = Flask(__name__)
-
+flightapp.config['SECRET_KEY'] = '123456'
+#flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ledung123.vn@localhost/labsaledb?charset=utf8mb4'
 flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/Admin/Desktop/FlightManagement/flightsystem_CNPM/app/database/flightManagement.db'
-flightapp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+flightapp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+db = SQLAlchemy(app=flightapp)
 # Initialize the database
 db.init_app(flightapp)
 
@@ -15,6 +25,17 @@ from .models import Customer, Employee, FlightDetail, Promotion, Price, Ticket, 
 
 # Function to create the flight table
 
+# Cấu hình Flask-Mail từ biến môi trường
+mail_settings = {
+    "MAIL_SERVER": "smtp.gmail.com",
+    "MAIL_PORT": 587,
+    "MAIL_USE_TLS": True,
+    "MAIL_USE_SSL": False,
+    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),  # Sử dụng biến môi trường cho email
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),  # Sử dụng biến môi trường cho mật khẩu
+}
+mail.init_app(flightapp)
+flightapp.config.update(mail_settings)
 # Create the tables
 def create_tables():
     db.create_all()
@@ -75,3 +96,6 @@ def get_flights():
                     'price': flight.price} for flight in flights]
     return jsonify({'flights': flight_data})
 # Create the tables
+
+login_manager = LoginManager()
+login_manager.init_app(flightapp)

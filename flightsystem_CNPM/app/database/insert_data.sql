@@ -50,8 +50,8 @@ INSERT INTO Review VALUES
 
 -- Insert data into the Schedule table
 INSERT INTO Schedule VALUES
-    ('F001', 'Sân Bay 1', 'Sân Bay 2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 'Sân Bay 3'),
-    ('F002', 'Sân Bay 3', 'Sân Bay 4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 'Sân Bay 5');
+    ('F001', 'TPHCM', 'Hà Nội', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 'Sân Bay 3'),
+    ('F002', 'Đà Lạt', 'Đà Nẵng', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 'Sân Bay 5');
 
 -- Insert data into the Reservation table
 INSERT INTO Reservation VALUES
