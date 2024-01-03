@@ -1,19 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, FlightDetail, Customer, Admin, ConfirmationToken
+from models import db, FlightDetail, Customer, Admin, ConfirmationToken, Schedule
 from flask_mail import Mail, Message
 import uuid
 from flask_mysqldb import MySQL
 from datetime import datetime
 import requests
 import qrcode
+from flask_admin import Admin, expose
 flightapp = Flask(__name__)
 
 
 
 # SQLAlchemy configuration
 #flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ledung123.vn@localhost/labsaledb?charset=utf8mb4'
-flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/Admin/Desktop/FlightManagement/flightsystem_CNPM/app/database/flightManagement.db'
 
 
 
@@ -72,16 +72,25 @@ def sellticket():
 
 @flightapp.route("/ScheduleManagement")
 def ScheduleManagement():
-    return render_template("ScheduleManagement.html")
+    # Fetch data from the database
+    schedules = Schedule.query.all()
+
+    # Pass the data to the template
+    return render_template("ScheduleManagement.html", schedules=schedules)
 
 @flightapp.route("/flightManagement")
 def flightManagement():
-    # Fetch data from the database
-    flights = FlightDetail.query.all()
+    try:
+        # Fetch data from the database
+        flights = FlightDetail.query.all()
 
-    # Pass the data to the template
-    return render_template("flightManagement.html", flights=flights)
-
+        # Pass the data to the template
+        return render_template("flightManagement.html", flights=flights)
+    except Exception as e:
+        # Log the exception
+        print(f"An error occurred: {str(e)}")
+        # Optionally, you can return an error page or redirect to a specific route
+        return render_template("flightManagement.html",message="An error occurred. Please try again later.")
 
 @flightapp.route("/thanhToan", methods=['GET', 'POST'])
 def thanhToan():

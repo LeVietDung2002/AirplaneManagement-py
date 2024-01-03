@@ -15,8 +15,8 @@ INSERT INTO Employee VALUES
 
 -- Insert data into the FlightDetail table
 INSERT INTO FlightDetail VALUES
-    ('F001', 'Sân Bay 1', 'Sân Bay 2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 150.00),
-    ('F002', 'Sân Bay 3', 'Sân Bay 4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 200.00);
+    ('F001', 'Sân Bay 1', 'Sân Bay 2', '2023-01-01 08:00:00', '2023-01-01 10:00:00', 100, 150.00, 'Route001', 'A001'),
+    ('F002', 'Sân Bay 3', 'Sân Bay 4', '2023-02-01 12:00:00', '2023-02-01 14:00:00', 120, 200.00, 'Route002', 'A002');
 
 -- Insert data into the Promotion table
 INSERT INTO Promotion VALUES
@@ -40,8 +40,8 @@ INSERT INTO Booking VALUES
 
 -- Insert data into the Payment table
 INSERT INTO Payment VALUES
-    ('PM001', 120.00, 'Credit Card', 'Success', '2023-01-01 10:00:00'),
-    ('PM002', 180.00, 'PayPal', 'Pending', '2023-02-01 14:00:00');
+    ('PM001', 120.00, 'Credit Card', 'Success', '2023-01-01 10:00:00', 'B001'),
+    ('PM002', 180.00, 'PayPal', 'Pending', '2023-02-01 14:00:00', 'B002');
 
 -- Insert data into the Review table
 INSERT INTO Review VALUES

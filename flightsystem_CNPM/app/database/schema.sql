@@ -24,7 +24,11 @@ CREATE TABLE FlightDetail (
     departureTime DATETIME,
     arrivalTime DATETIME,
     availableSeats INT,
-    price DOUBLE
+    price DOUBLE,
+    routeID VARCHAR(50),
+    aircraftID VARCHAR(50),
+    FOREIGN KEY (routeID) REFERENCES Route(routeID),
+    FOREIGN KEY (aircraftID) REFERENCES Aircraft(aircraftID)
 );
 
 -- Promotion Table
@@ -72,7 +76,9 @@ CREATE TABLE Payment (
     amountPaid DOUBLE,
     paymentMethod VARCHAR(50),
     paymentStatus VARCHAR(50),
-    paymentDateTime DATETIME
+    paymentDateTime DATETIME,
+    bookingID VARCHAR(50),
+    FOREIGN KEY (bookingID) REFERENCES Booking(bookingID)
 );
 
 -- Review Table
@@ -145,6 +151,8 @@ CREATE TABLE Aircraft (
     capacity INT,
     manufacturer VARCHAR(255)
 );
+
+-- ReportRevenue Table
 CREATE TABLE ReportRevenue (
     reportID VARCHAR(50) PRIMARY KEY,
     reservationID VARCHAR(50),

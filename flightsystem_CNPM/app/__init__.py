@@ -1,67 +1,70 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
-from flask_login import LoginManager
+from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import os
-from models import db, FlightDetail, Customer, Admin, ConfirmationToken
-from flask_mail import Mail, Message
-from flask_mysqldb import MySQL
-
-
-
-
 from flask_mail import Mail
-mail = Mail()
+from flask_login import LoginManager
+import os
 
 flightapp = Flask(__name__)
+
+# Configuration for SQLAlchemy
 flightapp.config['SECRET_KEY'] = '123456'
-#flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ledung123.vn@localhost/labsaledb?charset=utf8mb4'
-flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/Admin/Desktop/FlightManagement/flightsystem_CNPM/app/database/flightManagement.db'
-flightapp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app=flightapp)
-# Initialize the database
-db.init_app(flightapp)
+flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/Admin/Desktop/FlightManagement/flightsystem_CNPM/app/database/FlightRes.db'
+flightapp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-from .models import Customer, Employee, FlightDetail, Promotion, Price, Ticket, Booking, Payment, Review, Schedule, Reservation, ReservationHistory, Invoice, Route, Aircraft, ReportRevenue
+# Initialize SQLAlchemy with the Flask app
+db = SQLAlchemy(flightapp)
 
-# Function to create the flight table
-
-# Cấu hình Flask-Mail từ biến môi trường
+# Configuration for Flask-Mail
 mail_settings = {
     "MAIL_SERVER": "smtp.gmail.com",
     "MAIL_PORT": 587,
     "MAIL_USE_TLS": True,
     "MAIL_USE_SSL": False,
-    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),  # Sử dụng biến môi trường cho email
-    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),  # Sử dụng biến môi trường cho mật khẩu
+    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),  # Use environment variable for email
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),  # Use environment variable for password
 }
-mail.init_app(flightapp)
+mail = Mail(flightapp)
 flightapp.config.update(mail_settings)
-# Create the tables
+
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(flightapp)
+
+# Import your models after initializing db
+from .models import Customer, Employee, Promotion, Price, Ticket, Booking, Payment, Review, Schedule, Reservation, ReservationHistory, Invoice, Route, Aircraft, ReportRevenue, FlightDetail
+
+# Create the tables when the application starts
+@flightapp.before_first_request
 def create_tables():
     db.create_all()
 
-# Drop all tables
-def drop_tables():
-    db.drop_all()
 
 
 # Function to add a flight to the database
-def add_flight(flight_code, departure, destination, departure_date):
+def add_flight(flightID, departureAirport, arrivalAirport, departureTime, arrivalTime, availableSeats, price):
     new_flight = FlightDetail(
-        flight_code=flight_code,
-        departure=departure,
-        destination=destination,
-        departure_date=departure_date
+        flightID=flightID,
+        departureAirport=departureAirport,
+        arrivalAirport=arrivalAirport,
+        departureTime=departureTime,
+        arrivalTime=arrivalTime,
+        availableSeats=availableSeats,
+        price=price
     )
     db.session.add(new_flight)
     db.session.commit()
-
 # Function to delete a flight from the database
-def delete_flight(flight_code):
-    flight = FlightDetail.query.filter_by(flight_code=flight_code).first()
-    if flight:
-        db.session.delete(flight)
-        db.session.commit()
+def delete_flight(flightID):
+    try:
+        flight = FlightDetail.query.filter_by(flightID=flightID).first()
+        if flight:
+            db.session.delete(flight)
+            db.session.commit()
+            return jsonify({'message': 'Flight deleted successfully'})
+        else:
+            return jsonify({'error': 'Flight not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Create the flight table when the application starts
 # This is not needed with Flask-SQLAlchemy
@@ -69,21 +72,28 @@ def delete_flight(flight_code):
 @flightapp.route('/add_flight', methods=['POST'])
 def add_flight_route():
     data = request.form
-    flight_code = data['flight_code']
-    departure = data['departure']
-    destination = data['destination']
-    departure_date = data['departure_date']
+    required_fields = ['flightID', 'departureAirport', 'arrivalAirport', 'departureTime', 'arrivalTime', 'availableSeats', 'price']
 
-    add_flight(flight_code, departure, destination, departure_date)
+    if all(field in data for field in required_fields):
+        flightID = data['flightID']
+        departureAirport = data['departureAirport']
+        arrivalAirport = data['arrivalAirport']
+        departureTime = data['departureTime']
+        arrivalTime = data['arrivalTime']
+        availableSeats = data['availableSeats']
+        price = data['price']
 
-    return jsonify({'message': 'Flight added successfully'})
+        add_flight(flightID, departureAirport, arrivalAirport, departureTime, arrivalTime, availableSeats, price)
 
+        return jsonify({'message': 'Flight added successfully'})
+    else:
+        return jsonify({'error': 'Missing required fields'}), 400
 @flightapp.route('/delete_flight', methods=['POST'])
 def delete_flight_route():
     data = request.form
-    flight_code = data['flight_code']
+    flightID  = data['flightID']
 
-    delete_flight(flight_code)
+    delete_flight(flightID)
 
     return jsonify({'message': 'Flight deleted successfully'})
 
@@ -96,6 +106,3 @@ def get_flights():
                     'price': flight.price} for flight in flights]
     return jsonify({'flights': flight_data})
 # Create the tables
-
-login_manager = LoginManager()
-login_manager.init_app(flightapp)
