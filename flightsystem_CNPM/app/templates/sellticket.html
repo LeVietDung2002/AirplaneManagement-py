@@ -58,7 +58,7 @@
                 <div class="main">
                     <section>
                         <form action="/process_ticket_sale" method="post" id="ticketForm">
-                            <!-- Dropdown for selecting the flight -->
+
                             <div class="form-group">
                                 <label for="flight">Chọn chuyến bay:</label>
                                 <select class="form-control" id="flight" name="flight" required>
@@ -123,9 +123,9 @@
 
             // Check which radio button is selected and update price accordingly
             if (class1Radio.checked) {
-                price = 100; // Set the price for class 1
+                price = 2000000; // Set the price for class 1
             } else if (class2Radio.checked) {
-                price = 50; // Set the price for class 2
+                price = 1000000; // Set the price for class 2
             }
 
             // Update the ticket price input

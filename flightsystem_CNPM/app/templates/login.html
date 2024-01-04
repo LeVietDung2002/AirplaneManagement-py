@@ -71,7 +71,9 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Đăng Nhập</button>
-
+                    <h3 {% if some_condition %}>
+                        <a href="{{ url_for('loginadmin') }}" class="btn btn-primary">Đăng Nhập bằng admin</a>
+                    {% endif %}</h3>
                     <h3>Đăng nhập bằng mã QR</h3>
                     <h1>QR Code Generator</h1>
                     <div>

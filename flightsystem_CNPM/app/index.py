@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file, Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, FlightDetail, Customer, Admin, ConfirmationToken, Schedule
 from flask_mail import Mail, Message
@@ -22,7 +22,7 @@ flightapp = Flask(__name__)
 @flightapp.route("/")
 def home():
 
-    return render_template("home.html") 
+    return render_template("home.html")
 
 # Duong dan den trang dang nhap
 @flightapp.route("/dashboard")
@@ -42,10 +42,10 @@ def login():
             return redirect(url_for('home'))
 
         # Check if the entered credentials match an Admin
-        admin = Admin.query.filter_by(email=email).first()
-        if admin and check_password_hash(admin.password, password):
+        #admin = Admin.query.filter_by(email=email).first()
+       #if admin and check_password_hash(admin.password, password):
             # Log in the admin
-            return redirect(url_for('dashboard'))
+          #  return redirect(url_for('dashboard'))
 
         return render_template('login.html', message='Invalid email or password.')
 
@@ -72,25 +72,14 @@ def sellticket():
 
 @flightapp.route("/ScheduleManagement")
 def ScheduleManagement():
-    # Fetch data from the database
-    schedules = Schedule.query.all()
 
     # Pass the data to the template
-    return render_template("ScheduleManagement.html", schedules=schedules)
+    return render_template("ScheduleManagement.html")
 
 @flightapp.route("/flightManagement")
 def flightManagement():
-    try:
-        # Fetch data from the database
-        flights = FlightDetail.query.all()
 
-        # Pass the data to the template
-        return render_template("flightManagement.html", flights=flights)
-    except Exception as e:
-        # Log the exception
-        print(f"An error occurred: {str(e)}")
-        # Optionally, you can return an error page or redirect to a specific route
-        return render_template("flightManagement.html",message="An error occurred. Please try again later.")
+        return render_template("flightManagement.html")
 
 @flightapp.route("/thanhToan", methods=['GET', 'POST'])
 def thanhToan():
@@ -224,7 +213,10 @@ def payment_success():
 
     return render_template('payment_success.html')
 
+@flightapp.route("/loginadmin")
 
+def loginadmin():
+    return render_template('loginadmin.html')
 @flightapp.route('/generate_qr')
 def generate_qr():
     data_to_encode = "Hello, this is your QR code data!"

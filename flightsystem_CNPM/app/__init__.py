@@ -9,6 +9,7 @@ flightapp = Flask(__name__)
 # Configuration for SQLAlchemy
 flightapp.config['SECRET_KEY'] = '123456'
 flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/Admin/Desktop/FlightManagement/flightsystem_CNPM/app/database/FlightRes.db'
+flightapp.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:ledung123.vn@localhost:3306/qlcb?charset=utf8mb4'
 flightapp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy with the Flask app
