@@ -1,12 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- meta section -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- page config section -->
     <title>Hệ thống quản lý chuyến bay</title>
 
     <!-- Bootstrap CSS -->
@@ -16,14 +13,14 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 
-    <!-- Link CSS của Swiper -->
+    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
     <!-- jQuery -->
     <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <!-- Link JS của Swiper -->
+    <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
     <!-- Bootstrap JS -->
@@ -51,18 +48,8 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{url_for('booktickets')}}">Đặt Vé</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{url_for('sellticket')}}">Bán Vé</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
-                </li>
+
+
             </ul>
         </div>
     </nav>
@@ -76,106 +63,323 @@
     </header>
 
     <!-- Main Content -->
-    <!-- Chat Message Box -->
-    <div class="message-box">
-        <h2>We Love LVDAirlines</h2>
-        <p>Chào bạn đến với LVDAirline. Bạn hãy giới thiệu về mình để cùng trò chuyện với LVD. Chúc bạn ngày tốt lành, thật nhiều niềm vui bạn nhé.</p>
-
-
-        <!-- Chat Form -->
-        <form action="#" method="post">
-            <label for="fullName">Họ và tên(*)</label>
-            <input type="text" id="fullName" name="fullName" required>
-
-            <label for="email">Email(*)</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="phone">Số điện thoại(*)</label>
-            <input type="tel" id="phone" name="phone" required>
-
-            <button type="submit">Bắt đầu trò chuyện</button>
-        </form>
-    </div>
-
     <div class="container mt-5">
-        <div class="row">
+
+            <div class="row">
             <div class="col-md-6">
-                <!-- Form đăng nhập -->
+                <!-- Chat Message Box -->
+                <div class="message-box">
+                    <h2>We Love LVDAirlines</h2>
+                    <p>Chào bạn đến với LVDAirline. Bạn hãy giới thiệu về mình để cùng trò chuyện với LVD. Chúc bạn
+                        ngày tốt lành, thật nhiều niềm vui bạn nhé.</p>
+
+                    <!-- Chat Form -->
+                    <form action="#" method="post">
+                        <label for="fullName">Họ và tên(*)</label>
+                        <input type="text" id="fullName" name="fullName" required>
+
+                        <label for="email">Email(*)</label>
+
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="phone">Số điện thoại(*)</label>
+                        <input type="tel" id="phone" name="phone" required>
+
+                        <button type="submit">Bắt đầu trò chuyện</button>
+                    </form>
+                </div>
             </div>
+
             <div class="col-md-6">
-                <!-- Thêm class "swiper-container" để sử dụng Swiper -->
+                <!-- Swiper Container -->
                 <div class="swiper-container full-width">
-                    <!-- Thêm class "swiper-wrapper" để chứa các ảnh -->
                     <div class="swiper-wrapper">
-                        <!-- Mỗi ảnh sẽ là một "swiper-slide" -->
                         <div class="swiper-slide">
-                            <!-- Thêm class "swiper-image" cho tất cả các ảnh -->
                             <img src="{{url_for('static', filename='image/airplane.jpg')}}" alt="Airplane Image"
                                 class="img-fluid w-100 swiper-image">
                         </div>
                         <div class="swiper-slide">
-                            <!-- Thêm class "swiper-image" cho tất cả các ảnh -->
                             <img src="{{url_for('static', filename='image/airplane1.jpg')}}" alt="Airplane Image"
                                 class="img-fluid w-100 swiper-image">
                         </div>
                         <div class="swiper-slide">
-                            <!-- Thêm class "swiper-image" cho tất cả các ảnh -->
                             <img src="{{url_for('static', filename='image/airplane2.jpg')}}" alt="Airplane Image"
                                 class="img-fluid w-100 swiper-image">
                         </div>
-                         <div class="swiper-slide">
-                            <!-- Thêm class "swiper-image" cho tất cả các ảnh -->
+                        <div class="swiper-slide">
                             <img src="{{url_for('static', filename='image/airplane.jpg')}}" alt="Airplane Image"
                                 class="img-fluid w-100 swiper-image">
                         </div>
                         <div class="swiper-slide">
-                            <!-- Thêm class "swiper-image" cho tất cả các ảnh -->
                             <img src="{{url_for('static', filename='image/airplane1.jpg')}}" alt="Airplane Image"
                                 class="img-fluid w-100 swiper-image">
                         </div>
-                         <div class="swiper-slide">
-                            <!-- Thêm class "swiper-image" cho tất cả các ảnh -->
+                        <div class="swiper-slide">
                             <img src="{{url_for('static', filename='image/airplane2.jpg')}}" alt="Airplane Image"
                                 class="img-fluid w-100 swiper-image">
                         </div>
                     </div>
-
+                </div>
+            </div>
+                <div class="swiper-container full-width">
+    <div class="swiper-wrapper">
+        <!-- First Slide -->
+        <div class="swiper-slide">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Dịch vụ trên không</h5>
+                    <p>Thông tin về dịch vụ trên không...</p>
+                    <!-- Add more content as needed -->
+                </div>
+                <div class="col-md-3">
+                    <h5>Tạp chí Heritage</h5>
+                    <p>Thông tin về Tạp chí Heritage...</p>
+                    <!-- Add more content as needed -->
+                </div>
+                <div class="col-md-3">
+                    <h5>Hạng M Quyền năng</h5>
+                    <p>Thông tin về Hạng M Quyền năng...</p>
+                    <!-- Add more content as needed -->
                 </div>
             </div>
         </div>
+
+        <!-- Second Slide -->
+        <div class="swiper-slide">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Ẩm thực trên mây hạng Thương gia</h5>
+                    <p>Thông tin về Ẩm thực trên mây hạng Thương gia...</p>
+                    <!-- Add more content as needed -->
+                </div>
+                <div class="col-md-3">
+                    <h5>Ẩm thực hạng Phổ thông đặc biệt</h5>
+                    <p>Thông tin về Ẩm thực hạng Phổ thông đặc biệt...</p>
+                    <!-- Add more content as needed -->
+                </div>
+                <div class="col-md-3">
+                    <h5>Ẩm thực hạng Phổ thông</h5>
+                    <p>Thông tin về Ẩm thực hạng Phổ thông...</p>
+                    <!-- Add more content as needed -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat for more slides as needed -->
+    </div>
+    <!-- Add pagination and navigation elements -->
+    <div class="swiper-pagination"></div>
+        </div>
     </div>
 
+    <!-- News Section -->
+    <section class="container mt-5">
+        <h2 class="text-center">Tin Tức</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{url_for('static', filename='image/news1.jpg')}}" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Địa điểm du lịch đắt khách</h5>
+                        <p class="card-text">Tokyo</p>
+                                                <p class="card-text">Đảo Phú Quốc</p>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Add more news cards as needed -->
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="container mt-5">
+        <h2 class="text-center">Sự Kiện</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{url_for('static', filename='image/event1.jpg')}}" class="card-img-top" alt="Event Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Tên sự kiện 1</h5>
+                        <p class="card-text">Mô tả sự kiện 1...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more event cards as needed -->
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="container mt-5">
+        <h2 class="text-center">Về Chúng Tôi</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+        <!-- Add more content about your organization -->
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
-        <p>Bản quyền © 2023 Nhóm 16.</p>
-    </footer>
+
+
+
+        <!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>Giới Thiệu Công Ty</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Đội Bay</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Đối Tác</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Thông Tin Truyền Thông</h5>
+                <!-- Add more content as needed -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h5>Trách Nhiệm Xã Hội</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Quan Hệ Cổ Đông</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Thông Tin Đấu Thầu</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Việc Làm Với LVDAirline</h5>
+                <!-- Add more content as needed -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h5>Pháp Lý</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Các Điều Kiện & Điều Khoản</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Điều Lệ Vận Chuyển</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Điều Kiện Sử Dụng Cookies</h5>
+                <!-- Add more content as needed -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h5>Bảo Mật Thông Tin</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Quy Chế Hoạt Động Sàn TMĐT</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Hỗ Trợ</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Góp Ý Dịch Vụ</h5>
+                <!-- Add more content as needed -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h5>Trung Tâm Trợ Giúp</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Liên Hệ Với Chi Nhánh Của LVDAirline</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Chính Sách Bảo Vệ Hành Khách</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Trợ Lý Ảo Của LVDAirline</h5>
+                <!-- Add more content as needed -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h5>Ứng Dụng Di Động</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Vận Tải Hàng Hóa</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Trang Web Hàng Hoá</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Thông Tin Hữu Ích</h5>
+                <!-- Add more content as needed -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <h5>Cẩm Nang Mua Vé Online</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <div class="col-md-3">
+                <h5>Quảng Cáo Với LVDAirline</h5>
+                <!-- Add more content as needed -->
+            </div>
+            <!-- Add more footer links as needed -->
+        </div>
+    </div>
+    <div>
+        <p class="mt-4">Bản quyền © 2023 LVDAirline. </p>
+
+    </div>
+</footer>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-                     var mySwiper = new Swiper('.swiper-container', {
-                    loop: true, // Enable continuous loop
-                    autoplay: {
-                        delay: 3000, // Thời gian hiển thị mỗi ảnh (millisecond)
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
+            var mySwiper = new Swiper('.swiper-container', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
             });
         });
 
-        $(document).ready(function() {
-    $('.header').mouseenter(function() {
-        $(this).animate({ backgroundColor: '#eee' }, 300);
-    });
+        $(document).ready(function () {
+            $('.header').mouseenter(function () {
+                $(this).animate({ backgroundColor: '#eee' }, 300);
+            });
 
-    $('.menu li a').hover(function() {
-        $(this).animate({ backgroundColor: '#b8b8b8' }, 300);
-    });
+            $('.menu li a').hover(function () {
+                $(this).animate({ backgroundColor: '#b8b8b8' }, 300);
+            });
+        });
 
-    // Thêm các hiệu ứng động khác tùy ý
-});
-  function toggleChat() {
+        function toggleChat() {
             var chatBox = document.getElementById("chatBox");
             chatBox.classList.toggle("minimized");
         }

@@ -1,0 +1,86 @@
+<!-- wait.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Loading Screen</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: #007bff;
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Custom styles for airplane images */
+        .airplane-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .airplane-image {
+            width: 500px; /* Adjust the size as needed */
+            height: auto;
+            margin: 0 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-container">
+        <div class="airplane-images">
+            <img src="{{url_for('static', filename='image/airplane.jpg')}}" alt="Airplane 1" class="airplane-image">
+            <img src="{{url_for('static', filename='image/airplane1.jpg')}}" alt="Airplane 2" class="airplane-image">
+            <!-- Add more airplane images as needed -->
+        </div>
+
+        <h2 class="loading-text mt-3">Loading...</h2>
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script>
+        // Redirect to the actual destination after a delay
+        setTimeout(function () {
+            window.location.href = "{{ destination }}";
+        }, 1000);  //  adjust as needed
+    </script>
+</body>
+
+</html>

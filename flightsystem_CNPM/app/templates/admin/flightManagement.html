@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <!-- jQuery -->
+    <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{url_for('home')}}">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+ <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="welcome-container">
+                    <h2>Chào mừng user: <span id="username"></span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve the username from server-side logic (replace with your actual logic)
+        const username = 'admin'; // Replace with your logic to get the username
+        document.getElementById('username').textContent = username;
+    </script>
+    <div class="main">
+        <div class="flightManagement">
+            <!-- Add Flight Form -->
+            <h1>Quản lý chuyến bay</h1>
+
+            <form action="{{ url_for('flightManagement') }}" method="post">
+                <label for="flight_code">Mã Chuyến Bay:</label>
+                <input type="text" id="flight_code" name="flight_code" required>
+
+                <label for="departure">Điểm Xuất Phát:</label>
+                <input type="text" id="departure" name="departure" required>
+
+                <label for="destination">Điểm Đến:</label>
+                <input type="text" id="destination" name="destination" required>
+
+                <label for="departure_date">Ngày Khởi Hành:</label>
+                <input type="date" id="departure_date" name="departure_date" required>
+
+                <button type="button"onclick="addFlight()">Thêm Chuyến Bay</button>
+                <button type="button" onclick="editFlight()">Sửa Chuyến Bay</button>
+
+            </form>
+        </div>
+
+
+
+        <div>
+
+        </div>
+
+        <div class="list-flight">
+             <div class="list-flight">
+                    <h2>Danh sách các chuyến bay</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Chọn</th>
+                                    <th>Mã Chuyến Bay</th>
+                                    <th>Điểm Xuất Phát</th>
+                                    <th>Điểm Đến</th>
+                                    <th>Ngày Khởi Hành</th>
+                                    <th>Arrival Time</th>
+                                    <th>Available Seats</th>
+                                    <th>Giá Cả</th>
+                                    <th>Tuyến</th>
+                                    <th>Mã Máy Bay</th>
+                                    <!-- Thêm các cột khác cần hiển thị -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dữ liệu chuyến bay sẽ được thêm vào đây từ code server -->
+                                <tr>
+
+                                    <!-- Thêm các ô dữ liệu khác -->
+                                </tr>
+                                <!-- Thêm các dòng dữ liệu khác -->
+                            </tbody>
+                        </table>
+                         <!-- Search Flight Form -->
+        <div class="search-flight-form">
+            <h1>Tìm Kiếm Chuyến Bay</h1>
+            <form id="searchForm">
+                <label for="searchFlightID">Tìm Kiếm ID:</label>
+                 <select id="searchFlightID" name="searchFlightID" onchange="displaySelectedFlight()">
+                    </select>
+                <button type="button" onclick="deleteSelectedFlight()">Xóa Chuyến Bay</button>
+            </form>
+
+        </div>
+                    </div>
+                </div>
+      <div class="row">
+    <div class="col-sm-12">
+    </div>
+    </div>
+   </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/flightManage.js') }}"></script>
+<script>
+
+</script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+
+</div>
+</body>
+
+ <div class="footer">
+        <p>Bản quyền thuộc về nhóm 16</p>
+    </div>
+
+</html>

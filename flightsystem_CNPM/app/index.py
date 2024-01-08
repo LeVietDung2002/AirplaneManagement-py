@@ -1,15 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file, Blueprint
+from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, FlightDetail, Customer, Admin, ConfirmationToken, Schedule
+from models import db, Customer, ConfirmationToken
 from flask_mail import Mail, Message
 import uuid
+from time import sleep
 from flask_mysqldb import MySQL
 from datetime import datetime
 import requests
 import qrcode
 from flask_admin import Admin, expose
+from data import users,admin_username, employee
 flightapp = Flask(__name__)
 
+flightapp.secret_key = '123456'  # Replace with a secret key for session management
 
 
 # SQLAlchemy configuration
@@ -21,7 +24,13 @@ flightapp = Flask(__name__)
 # Duong dan den trang chu
 @flightapp.route("/")
 def home():
+    # Redirect to the wait.html page
+    sleep(1)  # Simulate a delay of 2 seconds
+    return render_template("wait.html", destination=url_for('home_actual'))
 
+
+@flightapp.route("/home_actual")
+def home_actual():
     return render_template("home.html")
 
 # Duong dan den trang dang nhap
@@ -32,54 +41,80 @@ def dashboard():
 @flightapp.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        username = request.form.get('username')
         password = request.form.get('password')
 
-        # Check if the entered credentials match a Customer
-        customer = Customer.query.filter_by(email=email).first()
-        if customer and check_password_hash(customer.password, password):
-            # Log in the customer
-            return redirect(url_for('home'))
+        # Check if the entered credentials match the hardcoded values
+        if username in users and users[username] == password:
+            # Successful login
+            session['username'] = username  # Store username in session
+            return redirect(url_for('booktickets'))
 
-        # Check if the entered credentials match an Admin
-        #admin = Admin.query.filter_by(email=email).first()
-       #if admin and check_password_hash(admin.password, password):
-            # Log in the admin
-          #  return redirect(url_for('dashboard'))
+        elif username in employee and employee[username] == password:
+            # Successful login for employee
+            session['username'] = username  # Store username in session
+            return redirect(url_for('sellticket'))
 
-        return render_template('login.html', message='Invalid email or password.')
+        # Incorrect username or password
+        return render_template('login.html', message='Invalid username or password.')
 
+    # Render the login form initially
     return render_template('login.html', message='')
 
+@flightapp.route("/loginAdmin", methods=["GET", "POST"])
+def loginAdmin():
+    if request.method == 'POST':
+        username = request.form.get('username')
+
+        # Check if the entered username is the admin username
+        if username == admin_username:
+            # Successful admin login
+            return render_template('admin/dashboard.html')
+
+        # Incorrect admin username
+        return render_template('admin/loginAdmin.html', message='Invalid admin username.')
+
+    # Render the admin login form initially
+    return render_template('admin/loginAdmin.html', message='')
+
+@flightapp.route("/changePassword")
+def changePassword():
+    return render_template("changePassword.html")
 # Duong dan den trang dat ve
 @flightapp.route("/booktickets")
 def booktickets():
-    return render_template("booktickets.html")
+    username = session.get('username')
+    if username:
+        # Pass the username to the template
+        return render_template('booktickets.html', username=username)
+    else:
+        # Redirect to login if username is not in session
+        return redirect(url_for('login'))
 
 # Duong dan den trang ban ve
 @flightapp.route("/sellticket", methods=["GET", "POST"])
 def sellticket():
-    if request.method == "POST":
-        # Process the form data here
-        # For example, you can access form values using request.form['fieldname']
-        # Implement your logic for selling tickets
+    username = session.get('username')
+    if username:
+        # Pass the username to the template
+        return render_template('employee/sellticket.html', username=username)
+    else:
+        # Redirect to login if username is not in session
+        return redirect(url_for('login'))
 
-        # Redirect to a success page or home page after form submission
-        return redirect(url_for('home'))
-
-    # Render the sellticket.html template
-    return render_template("sellticket.html")
 
 @flightapp.route("/ScheduleManagement")
 def ScheduleManagement():
 
     # Pass the data to the template
-    return render_template("ScheduleManagement.html")
+    return render_template("admin/ScheduleManagement.html")
 
 @flightapp.route("/flightManagement")
 def flightManagement():
 
-        return render_template("flightManagement.html")
+
+    # Pass the data to the template
+    return render_template('admin/flightManagement.html')
 
 @flightapp.route("/thanhToan", methods=['GET', 'POST'])
 def thanhToan():
@@ -213,10 +248,7 @@ def payment_success():
 
     return render_template('payment_success.html')
 
-@flightapp.route("/loginadmin")
 
-def loginadmin():
-    return render_template('loginadmin.html')
 @flightapp.route('/generate_qr')
 def generate_qr():
     data_to_encode = "Hello, this is your QR code data!"
@@ -241,6 +273,27 @@ def generate_qr():
 @flightapp.route("/qr_page")
 def qr_page():
     return render_template('qr_page.html')
+@flightapp.route("/addFlight")
+def addFlight():
+    username = session.get('username')
+    if username:
+        # Pass the username to the template
+        return render_template('employee/addFlight.html', username=username)
+    else:
+        # Redirect to login if username is not in session
+        return redirect(url_for('login'))
+
+@flightapp.route("/Addschedule")
+def Addschedule():
+    username = session.get('username')
+    if username:
+        # Pass the username to the template
+        return render_template('employee/Addschedule.html', username=username)
+    else:
+        # Redirect to login if username is not in session
+        return redirect(url_for('login'))
+
+
 
 def generate_vnpay_payment_url(request_data):
     # Build the VNPAY payment URL using the provided data

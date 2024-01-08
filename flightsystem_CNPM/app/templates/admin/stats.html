@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <!-- jQuery -->
+    <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Your custom JS file -->
+    <script src="{{ url_for('static', filename='js/flightManagement.js') }}"></script>
+
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{url_for('home')}}">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div class="flightManagement">
+            <!-- Add Flight Form -->
+            <h1>Thêm Chuyến Bay</h1>
+            <form action="{{ url_for('flightManagement') }}" method="post">
+                <label for="flight_code">Mã Chuyến Bay:</label>
+                <input type="text" id="flight_code" name="flight_code" required>
+
+                <label for="departure">Điểm Xuất Phát:</label>
+                <input type="text" id="departure" name="departure" required>
+
+                <label for="destination">Điểm Đến:</label>
+                <input type="text" id="destination" name="destination" required>
+
+                <label for="departure_date">Ngày Khởi Hành:</label>
+                <input type="date" id="departure_date" name="departure_date" required>
+
+                <button type="submit">Thêm Chuyến Bay</button>
+            </form>
+        </div>
+
+        <!-- Search Flight Form -->
+        <div class="search-flight-form">
+            <h1>Tìm Kiếm Chuyến Bay</h1>
+            <form id="searchForm">
+                <label for="searchFlightID">Tìm Kiếm ID:</label>
+                <input type="text" id="searchFlightID" name="searchFlightID" required>
+                <button type="button" onclick="searchFlight()">Tìm Kiếm</button>
+            </form>
+        </div>
+
+        <div>
+            <select id="delete_flight_code" name="delete_flight_code">
+                <!-- Option sẽ được thêm bằng JavaScript -->
+            </select>
+        </div>
+
+        <button type="button" onclick="addFlight()">Thêm Chuyến Bay</button>
+        <button type="button" onclick="editFlight()">Sửa Chuyến Bay</button>
+        <button type="button" onclick="deleteFlight()">Xóa Chuyến Bay</button>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="flightTable" class="table table-bordered table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Flight ID</th>
+                            <th>Departure Airport</th>
+                            <th>Arrival Airport</th>
+                            <th>Departure Time</th>
+                            <th>Arrival Time</th>
+                            <th>Available Seats</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for flight in flights %}
+                            <tr>
+                                <td>{{ flight.flightID }}</td>
+                                <td>{{ flight.departureAirport }}</td>
+                                <td>{{ flight.arrivalAirport }}</td>
+                                <td>{{ flight.departureTime }}</td>
+                                <td>{{ flight.arrivalTime }}</td>
+                                <td>{{ flight.availableSeats }}</td>
+                                <td>{{ flight.price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+        let lables = []
+        let data = []
+        {% for s in stats %}
+            lables.push('{{ s[0] }}')
+            data.push({{ s[1] }})
+        {% endfor %}
+        window.onload = function()
+        {
+            const ctx = document.getElementById('stats__chartjs').getContext('2d')
+            const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: lables,
+              datasets: [{
+                label: 'Thống kê doanh thu chuyến bay theo từng tháng',
+                data: data,
+                borderWidth: 1,
+                backgroundColor: ['rgb(255,0,0)',
+                                  'rgb(0,155,255)',
+                                  'rgb(0,0,255)',
+                                  'rgb(248 248 255)',
+                                  'rgb(220 220 220)',
+                                  'rgb(0,128,0)',
+                                  'rgb(0,128,128)']
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+
+
+</script>
+<h1 class="text-center text-info">Thống Kê Doanh Thu Chuyến Bay</h1>
+
+<!-- Tab content -->
+<form class="stat-datetime">
+        <lable>Nhập tháng và năm cần xem:</lable>
+        <input required class="input" type="month" name="__stat__">
+        <input class="btn btn-success button btn-datve" type="submit" value="Xem">
+    </form>
+    <table class="table">
+        <tr>
+            <th>Tên chuyến Bay</th>
+            <th>Doanh Thu</th>
+        </tr>
+        {% for s in stats %}
+        <tr>
+            <td>{{s[0]}}</td>
+            <td>{{ "{:,.1f}".format(s[1]) }} &#8363</td>
+            <td>{{s[2]}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+
+<div class="chart">
+    <canvas id="stats__chartjs"></canvas>
+</div>
+
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <div class="footer">
+        <p>Bản quyền thuộc về nhóm 16</p>
+    </div>
+
+
+
+
+</body>
+
+</html>

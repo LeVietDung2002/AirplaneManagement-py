@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/sellTicket.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/seatchart@0.1.0/dist/seatchart.min.css">
+
+    <style>
+        .normal {
+            color: white;
+            background-color: #43aa8b;
+        }
+
+        .vip {
+            color: white;
+            background-color: #43aa8b;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{url_for('home')}}">Hệ thống quản lý chuyến bay.</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('addFlight')}}">Thêm Chuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('Addschedule')}}">Thêm Tuyến Bay</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('sellticket')}}">Bán Vé</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </nav>
+<div class="container mt-4">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="title">
+                    <h2>Bán vé</h2>
+                </div>
+
+                <div class="main">
+                    <section>
+                        <form action="/process_ticket_sale" method="post" id="ticketForm">
+
+
+
+
+
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="list-passenger">
+            <h2>Danh sách hành khách</h2>
+                <label for="passengerSelect">Chọn hành khách:</label>
+                <select id="passengerSelect" onchange="displaySelectedPassenger()">
+                    <!-- Passenger options will be added here -->
+                </select>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                                       <tbody id="passengerTableBody">
+
+                        <!-- Sample data, replace this with dynamic data from the server -->
+                        <tr>
+
+                        </tr>
+                        <!-- Add more rows for additional passenger data -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+     <!-- Seat chart containers -->
+
+</div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="list-flight">
+                    <h2>Danh sách các chuyến bay</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Chọn</th>
+                                    <th>Mã Chuyến Bay</th>
+                                    <th>Điểm Xuất Phát</th>
+                                    <th>Điểm Đến</th>
+                                    <th>Ngày Khởi Hành</th>
+                                    <th>Giá Cả</th>
+                                    <th>Tuyến</th>
+                                    <th>Mã Máy Bay</th>
+                                    <!-- Thêm các cột khác cần hiển thị -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dữ liệu chuyến bay sẽ được thêm vào đây từ code server -->
+                                <tr>
+
+                                    <!-- Thêm các ô dữ liệu khác -->
+                                </tr>
+                                <!-- Thêm các dòng dữ liệu khác -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                            <div id="container" class="seat-container"></div>
+                            <div id="container1" class="seat-container"></div>
+
+                                <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary">Bán Vé</button>
+ </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>Bản quyền © 2023 Nhóm 16.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- Seat chart scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/seatchart@0.1.0/dist/seatchart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var element = document.getElementById('container');
+            var options = {
+                map: {
+                    rows: 7,
+                    columns: 7,
+                    seatTypes: {
+                        default: {
+                            label: 'hạng 2 - Phổ thông',
+                            cssClass: 'economy',
+                            price: 1000000
+                        },
+                    },
+                },
+            };
+            var sc = new Seatchart(element, options);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var element = document.getElementById('container1');
+            var options = {
+                map: {
+                    rows: 5,
+                    columns: 5,
+                    seatTypes: {
+                        default: {
+                            label: 'hang 1- VIP',
+                            cssClass: 'vip',
+                            price: 2000000
+                        },
+                    },
+                },
+            };
+            var sc = new Seatchart(element, options);
+        });
+
+        // Function to update ticket price based on selected class
+        function updateTicketPrice() {
+            var class1Radio = document.getElementById('class1');
+            var class2Radio = document.getElementById('class2');
+            var ticketPriceInput = document.getElementById('ticketPrice');
+
+            // Set default price
+            var price = 0;
+
+            // Check which radio button is selected and update price accordingly
+            if (class1Radio.checked) {
+                price = 2000000; // Set the price for class 1
+            } else if (class2Radio.checked) {
+                price = 1000000; // Set the price for class 2
+            }
+
+            // Update the ticket price input
+            ticketPriceInput.value = price;
+        }
+
+        // Add event listeners for radio buttons
+        document.getElementById('class1').addEventListener('change', updateTicketPrice);
+        document.getElementById('class2').addEventListener('change', updateTicketPrice);
+
+        // Call the function initially to set default price
+        updateTicketPrice();
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

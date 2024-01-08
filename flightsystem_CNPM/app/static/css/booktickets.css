@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0px 10px;
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #3a8cd1, #b0b0b0);
+    background: linear-gradient(to bottom, #ffffff,#3a8cd1 );
     color: #333333;
 }
 
@@ -168,3 +168,55 @@ body {
     width: 150px; /* Điều chỉnh kích thước theo ý muốn */
     font-size: 18px; /* Điều chỉnh kích thước font chữ */
 }
+.container {
+    max-width: 1500px; /* Adjust the max-width as needed */
+}
+.message-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            width: 300px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .minimize-btn {
+            cursor: pointer;
+            float: right;
+            font-size: 18px;
+            line-height: 1;
+            border: none;
+            background: none;
+            margin: -5px -5px 0 0;
+        }
+
+        .chat-content {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+ .message-box{
+
+   background: linear-gradient(to bottom, #3a8cd1, #b0b0b0); /* Adjusted background gradient */
+    color: #333333; /* Darker text color */
+ }
+
+ #username {
+            font-weight: bold;
+            color: #28a745;
+        }
+.welcome-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+   h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+.container {
+            margin-top: 50px;
+        }

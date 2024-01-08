@@ -1,9 +1,12 @@
 body {
-	margin: 0;
-	padding: 0px 10px;
+    margin: 0;
+    padding: 0;
     font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to bottom, #3a8cd1, #b0b0b0); /* Adjusted background gradient */
-    color: #333333; /* Darker text color */
+    background: linear-gradient(to bottom,#ffffff, #3a8cd1);
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 .header {
     background-color: #ffffff;
@@ -13,13 +16,13 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added a subtle shadow */
 }
 .footer {
-    background-color: #fff;
-	padding: 10px;
-	text-align: center;
-	border: 2px solid black;
-    margin-top: 200px; /* Add some top margin to the footer */
-
-
+   background-color: #fff;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid black;
+    margin-top: auto;
+    width: 100%; /* Set width to 100% */
+    box-sizing: border-box; /* Include padding in the width calculation */
 }
 .full-width {
     width: 100%;
@@ -29,10 +32,15 @@ body {
 .swiper-wrapper {
     display: flex;
 }
-
+.swiper-container {
+    position: relative;
+    z-index: 0; /* Set a lower z-index for the Swiper container */
+}
 .swiper-slide {
     width: 100%;
     flex-shrink: 0;
+                    z-index: 0; /* Set a higher z-index for the message box */
+
 }
 
 .menu {
@@ -129,16 +137,13 @@ form button:hover {
 	}
 }
 .swiper-image {
-    height: 400px; /* Đặt chiều cao mong muốn */
-}
-.swiper-container {
-    bottom:20px; /* Adjust the top position as needed */
-    right: 500px; /* Adjust the left position as needed */
-    width:500px;
-        height: 250; /* Adjust the height as needed */
+    height: 300px; /* Đặt chiều cao mong muốn */
+    width: 300px
+                z-index: 0; /* Set a higher z-index for the message box */
 
-    margin-bottom: 50px; /* Add some bottom margin to the swiper container */
 }
+
+
 .swiper-image {
     object-fit: cover;
 }
@@ -172,6 +177,8 @@ form select:hover {
             width: 300px;
             padding: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1; /* Set a higher z-index for the message box */
+
         }
 
         .minimize-btn {
@@ -194,3 +201,22 @@ form select:hover {
    background: linear-gradient(to bottom, #3a8cd1, #b0b0b0); /* Adjusted background gradient */
     color: #333333; /* Darker text color */
  }
+  #username {
+            font-weight: bold;
+            color: #28a745;
+        }
+.welcome-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+   h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+.container {
+            margin-top: 10px;
+             flex: 1;
+    padding: 10px;
+        }

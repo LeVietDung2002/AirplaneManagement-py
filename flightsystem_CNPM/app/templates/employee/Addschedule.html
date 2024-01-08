@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/ScheduleManagement.css')}}">
+
+    <title>Quản Lý Lịch Trình</title>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{url_for('home')}}">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('addFlight')}}">Thêm Chuyến Bay</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('Addschedule')}}">Thêm Tuyến Bay</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('sellticket')}}">Bán Vé</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+ <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="welcome-container">
+                    <h2>Chào mừng user: <span id="username"></span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve the username from server-side logic (replace with your actual logic)
+        const username = 'nv1'; // Replace with your logic to get the username
+        document.getElementById('username').textContent = username;
+    </script>
+    <div class="container">
+        <div class="header">
+            <h1>HỆ THỐNG QUẢN LÝ LỊCH BAY</h1>
+        </div>
+
+        <h2>Quản lý tuyến bay</h2>
+
+        <!-- Form thêm lịch trình mới -->
+        <form id="addForm">
+            <h3>Thêm Lịch Trình Mới</h3>
+            <label for="flightID">Mã Chuyến Bay:</label>
+            <input type="text" id="flightID" name="flightID" required>
+            <!-- ... (continue with the rest of the form) ... -->
+        </form>
+
+
+
+        <!-- Form xóa lịch trình -->
+
+        <div class="footer">
+            <p>Bản quyền thuộc về nhóm 16</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        // Thêm các đoạn mã JavaScript nếu cần thiết
+    </script>
+
+</body>
+
+
+</html>

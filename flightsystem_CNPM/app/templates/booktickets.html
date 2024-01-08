@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +7,34 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/booktickets.css')}}">
     <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
 
+    <!-- SeatChart library scripts and styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/seatchart@0.1.0/dist/seatchart.min.css">
+
+
+    <style>
+      .normal {
+        color: white;
+        background-color: #43aa8b;
+      }
+
+    </style>
+ <style>
+
+         .vip {
+        color: white;
+        background-color: #43aa8b;
+      }
+    </style>
+
 
     <!-- Add any additional scripts or stylesheets you need -->
 </head>
 
+
 <body>
+
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{{url_for('home')}}">Hệ thống quản lý chuyến bay.</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -27,21 +49,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('login')}}">Đăng Nhập</a>
                 </li>
+
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url_for('booktickets')}}">Đặt Vé</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('sellticket')}}">Bán Vé</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
-                </li>
+
+
             </ul>
         </div>
     </nav>
@@ -50,7 +63,17 @@
         <div class="jumbotron text-center">
             <h1 class="display-4">HỆ THỐNG QUẢN LÝ CHUYẾN BAY</h1>
         </div>
-
+ <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="welcome-container">
+                    <h1>Welcome, {{ username }}!</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+  <h1>User Information</h1>
+    <div id="user-info"></div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="find-flight">
@@ -91,6 +114,7 @@
             </div>
         </div>
 
+
         <div class="row justify-content-center mt-4">
             <div class="col-md-8">
                 <div class="list-flight">
@@ -104,6 +128,9 @@
                                     <th>Điểm Xuất Phát</th>
                                     <th>Điểm Đến</th>
                                     <th>Ngày Khởi Hành</th>
+                                    <th>Giá Cả</th>
+                                    <th>Tuyến</th>
+                                    <th>Mã Máy Bay</th>
                                     <!-- Thêm các cột khác cần hiển thị -->
                                 </tr>
                             </thead>
@@ -133,16 +160,9 @@
                         </div>
                         <div class="form-group">
                             <label for="customerID">Customer ID:</label>
-                            <input type="text" class="form-control" id="customerID" name="customerID" required>
+                            <input type="text" class="form-contro   l" id="customerID" name="customerID" required>
                         </div>
-                        <div class="form-group">
-                            <label for="flightClass">Flight Class:</label>
-                            <select class="form-control" id="flightClass" name="flightClass" required>
-                                <option value="class1">Hạng 1</option>
-                                <option value="class2">Hạng 2</option>
-                                <!-- Thêm các lựa chọn khác nếu cần -->
-                            </select>
-                        </div>
+
                         <div class="form-group">
                             <label for="paymentMethod">Payment Method:</label>
                             <select class="form-control" id="paymentMethod" name="paymentMethod" required>
@@ -152,7 +172,6 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="statusLabel">Trạng thái:</label>
                             <span>Đang chờ xác nhận</span>
                         </div>
                         <!-- Other form fields go here -->
@@ -163,19 +182,96 @@
                 </div>
             </div>
         </div>
+        <!-- Add the new form section for choosing reservation's seat -->
+      <div class="row justify-content-center mt-4">
+  <div class="col-md-8">
+    <div class="booking-info">
+      <h2>Đặt vé</h2>
+     <form action="{{ url_for('thanhToan') }}" method="post" class="needs-validation" novalidate>
+    <div class="form-group">
+        <label >Chọn Ghế:</label>
+        <div id="container" class="seat-container"></div>
+        <small id="seatSelectionHelp" class="form-text text-muted">Chọn ghế bạn muốn đặt.</small>
     </div>
 
+
+<!-- Add this script to initialize the seat chart -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/seatchart@0.1.0/dist/seatchart.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var element = document.getElementById('container');
+        var options = {
+            map: {
+                rows: 7,
+                columns: 7,
+                seatTypes: {
+                    default: {
+                        label: 'hạng 2 - Phổ thông',
+                        cssClass: 'economy',
+                        price: 1000000
+                    },
+
+                },
+            },
+
+        };
+
+        var sc = new Seatchart(element, options);
+    });
+
+</script>
+ <div id="container1" class="seat-container1"></div>
+
+
+
+<!-- Add this script to initialize the seat chart -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/seatchart@0.1.0/dist/seatchart.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var element = document.getElementById('container1');
+        var options = {
+            map: {
+                rows: 5,
+                columns: 5,
+                seatTypes: {
+
+                    default: {
+                        label: 'hang 1- VIP',
+                        cssClass: 'vip',
+                        price: 2000000
+
+                    },
+                },
+            },
+
+
+        };
+
+        var sc = new Seatchart(element, options);
+    });
+
+
+</script>
+
+    <form> <button type="submit" class="btn btn-primary">Đặt Vé</button></form>
+
+</form>
+
+    </div>
+  </div>
+</div>
+</div>
     <footer class="bg-dark text-white text-center py-3 mt-4">
         <p>Bản quyền © 2023 Nhóm 16.</p>
     </footer>
-        <!-- Bootstrap JS -->
 
+
+ <!-- Bootstrap JS -->
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 
 
 </body>

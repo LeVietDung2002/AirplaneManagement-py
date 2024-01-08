@@ -117,3 +117,32 @@ button {
         font-size: 1vw;
     }
 }
+ #username {
+            font-weight: bold;
+            color: #28a745;
+        }
+.welcome-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+   h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+.container {
+            margin-top: 50px;
+        }
+
+        .title {
+            background-color: #43aa8b;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .title h2 {
+            margin: 0;
+        }

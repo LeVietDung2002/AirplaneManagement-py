@@ -17,6 +17,8 @@
 
     <!-- jQuery -->
     <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/auth.js')}}"></script>
+
 </head>
 
 <body>
@@ -38,18 +40,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('booktickets')}}">Đặt Vé</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('sellticket')}}">Bán Vé</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a>
-                </li>
+
+
             </ul>
         </div>
     </nav>
@@ -70,10 +62,14 @@
                         <label for="password">Mật khẩu:</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Đăng Nhập</button>
-                    <h3 {% if some_condition %}>
-                        <a href="{{ url_for('loginadmin') }}" class="btn btn-primary">Đăng Nhập bằng admin</a>
-                    {% endif %}</h3>
+                    <br>
+                    <button onclick="login()">Đăng nhập</button>
+                     <br>
+                   <p class="text-center mt-3"><a href="{{ url_for('changePassword') }}">Quên mật khẩu? Nhấn vào đây.</a></p>
+
+                    <h3 >
+                        <a href="{{ url_for('loginAdmin') }}" class="btn btn-primary">Đăng Nhập bằng admin</a>
+                    </h3>
                     <h3>Đăng nhập bằng mã QR</h3>
                     <h1>QR Code Generator</h1>
                     <div>
@@ -99,9 +95,29 @@
     </div>
 
     <footer class="bg-dark text-white text-center py-3">
-        <p>Bản quyền © 2023 Nhóm 1.</p>
+        <p>Bản quyền © 2023 Nhóm 16.</p>
     </footer>
     <script>
+        // Function to authenticate user
+        async function authenticateUser() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const authenticatedUser = await authenticateUser(username, password);
+
+            if (authenticatedUser) {
+                const userRole = await checkUserRole(authenticatedUser.id);
+                console.log(`User authenticated with role: ${userRole}`);
+                // Redirect or perform other actions as needed
+            } else {
+                console.log("Authentication failed");
+                // Display an error message or perform other actions as needed
+            }
+
+            // Prevent form submission
+            return false;
+        }
+
         function generateQR() {
             console.log("Button clicked");
 

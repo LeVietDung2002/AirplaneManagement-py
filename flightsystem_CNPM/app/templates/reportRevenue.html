@@ -13,10 +13,9 @@
     </div>
 
     <ul class="menu">
-        <li><a href="{{url_for('home')}}">Trang Chủ</a></li>
-        <li><a href="{{url_for('login')}}">Đăng Nhập</a></li>
-        <li><a href="{{url_for('booktickets')}}">Đặt Vé</a></li>
-        <li><a href="{{url_for('sellticket')}}">Bán Vé</a></li>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
         <li><a href="{{url_for('flightManagement')}}">Quản Lý Chuyến Bay</a></li>
         <li><a href="{{url_for('ScheduleManagement')}}">Quản Lý Tuyến Bay</a></li>
 		<li><a class="active" href="{{url_for('reportRevenue')}}">Thông Kê Báo Cáo</a></li>
@@ -24,8 +23,8 @@
   <div class="title">
             <h1>Báo cáo doanh thu</h1>
         </div>
-    <div class="main">
-
+ <div class="main">
+            <canvas id="myChart"></canvas>
 
         <section>
           <h2>Báng báo cáo doanh thu</h2>
@@ -66,8 +65,26 @@
     </div>
 
     <script>
+ // Sample data for the chart (replace with your actual data)
+    var data = {
+        labels: ["January", "February", "March", "April", "May", "June"],
+        datasets: [{
+            label: "Revenue",
+            data: [65, 59, 80, 81, 56, 55],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    };
 
-    </script>
+    // Create the chart
+    var myChart = new Chart(document.getElementById("myChart"), {
+        type: 'bar', // Change the chart type as needed (line, pie, etc.)
+        data: data,
+        options: {} // Chart configuration options
+    });
+</script>
+
 
 <div class="footer">
 		<p>Bản quyền © 2023 Nhóm 16.</p>

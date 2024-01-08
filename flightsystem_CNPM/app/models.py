@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from datetime import datetime
+import json
 
 db = SQLAlchemy()
 
@@ -10,25 +11,21 @@ class Role(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
 
     def __str__(self):
-        return self.name
+        return f"Role ID: {self.id}, Name: {self.name}"
+
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    # Thêm cột role_id và tạo mối quan hệ khóa ngoại với Role
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     role = db.relationship('Role', backref='user_role', lazy=True)
-
     is_admin = db.Column(db.Boolean, default=False)
     is_employee = db.Column(db.Boolean, default=False)
 
     def __str__(self):
-        return self.username
-
-    def __str__(self):
-        return self.username
+        return f"User ID: {self.id}, Username: {self.username}, Email: {self.email}"
 
 class Admin(db.Model):
     __tablename__ = 'admin'
@@ -38,7 +35,6 @@ class Admin(db.Model):
 
     def __str__(self):
         return f"Admin ID: {self.id}, Role: {self.role.name}"
-
 class Customer(db.Model):
     __tablename__ = 'customer'
     customerID = db.Column(db.String(50), primary_key=True)
@@ -48,7 +44,7 @@ class Customer(db.Model):
     address = db.Column(db.String(255))
 
     def __str__(self):
-        return self.name
+        return f"Customer ID: {self.customerID}, Name: {self.name}"
 
 
 class Login(db.Model):
@@ -56,24 +52,21 @@ class Login(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-
-    # Thêm cột user_id và tạo mối quan hệ khóa ngoại
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref='login_user', lazy=True)
 
     def __str__(self):
-        return f"Login ID: {self.id}, User: {self.user.username}"
+        return f"Login ID: {self.id}, Username: {self.username}"
+
 class ConfirmationToken(db.Model):
-    __tablename__ = 'confirmationtoken'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    token = db.Column(db.String(120), nullable=False)
-    user = db.relationship('User', backref='confirmation_token_user', lazy=True)
+        __tablename__ = 'confirmationtoken'
+        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        token = db.Column(db.String(120), nullable=False)
+        user = db.relationship('User', backref='confirmation_token_user', lazy=True)
 
-    def __str__(self):
-        return f"Token ID: {self.id}, User: {self.user.username}"
-
-
+        def __str__(self):
+            return f"Token ID: {self.id}, User: {self.user.username}"
 class Employee(db.Model):
     __tablename__ = 'employee'
     employeeID = db.Column(db.String(50), primary_key=True)
@@ -81,13 +74,11 @@ class Employee(db.Model):
     email = db.Column(db.String(255))
     phone = db.Column(db.String(20))
     position = db.Column(db.String(100))
-
-    # Thêm cột login_id và tạo mối quan hệ khóa ngoại
     login_id = db.Column(db.Integer, db.ForeignKey('login.id'), nullable=False)
     login = db.relationship('Login', backref='employee_login', lazy=True)
 
     def __str__(self):
-        return self.name
+        return f"Employee ID: {self.employeeID}, Name: {self.name}"
 
 class Airport(db.Model):
     __tablename__ = 'airport'
@@ -95,7 +86,9 @@ class Airport(db.Model):
     airportName = db.Column(db.String(255))
 
     def __str__(self):
-        return f"{self.airportCode} - {self.airportName}"
+        return f"Airport Code: {self.airportCode}, Name: {self.airportName}"
+
+
 
 class Route(db.Model):
     __tablename__ = 'route'
@@ -110,6 +103,27 @@ class Route(db.Model):
 
     def __str__(self):
         return f"Route ID: {self.routeID}, Departure: {self.departure_airport.airportCode}, Arrival: {self.arrival_airport.airportCode}"
+class ReportRevenue(db.Model):
+    __tablename__ = 'reportRevenue'
+    reportID = db.Column(db.String(50), primary_key=True)
+    totalRevenue = db.Column(db.Float)
+    reportDateTime = db.Column(db.DateTime)
+    flightID = db.Column(db.String(50), db.ForeignKey('flight_detail.flightID'))
+
+    flight = db.relationship('FlightDetail', backref='revenue_reports')
+    __table_args__ = {'extend_existing': True}
+    def __str__(self):
+        return f"Report ID: {self.reportID}, Flight: {self.flight.flightID}"
+class CustomerFlight(db.Model):
+    __tablename__ = 'customer_flight'
+    customerID = db.Column(db.String(50), db.ForeignKey('customer.customerID'), primary_key=True)
+    flightID = db.Column(db.String(50), db.ForeignKey('flight_detail.flightID'), primary_key=True)
+
+    customer = db.relationship('Customer', backref='customer_flights')
+    flight = db.relationship('FlightDetail', backref='customer_flights')
+
+    def __str__(self):
+        return f"CustomerFlight - Customer: {self.customer.name}, Flight: {self.flight.flightID}"
 
 class Aircraft(db.Model):
     __tablename__ = 'aircraft'
@@ -135,11 +149,10 @@ class FlightDetail(db.Model):
 
     route = db.relationship('Route', backref='flights')
     aircraft = db.relationship('Aircraft', backref='flights')
-    schedules = db.relationship('Schedule', backref='flight', lazy=True)
+    schedules = db.relationship('Schedule', backref='flight_details', lazy=True)
 
     def __str__(self):
-        return f"Flight ID: {self.flightID}, Departure: {self.departure_airport.airportCode}, Arrival: {self.arrival_airport.airportCode}"
-
+        return f"Flight ID: {self.flightID}, Departure: {self.departureAirport.airportCode}, Arrival: {self.arrivalAirport.airportCode}"
 class Promotion(db.Model):
     __tablename__ = 'promotion'
     promotionID = db.Column(db.String(50), primary_key=True)
@@ -223,8 +236,7 @@ class Review(db.Model):
     reservation = db.relationship('Reservation', backref='reviews', lazy=True)
 
     def __str__(self):
-        return f"Review ID: {self.reviewID}, Reservation: {self.reservation.reservationID}"
-
+        return f"Review ID: {self.reviewID}, Reservation: {self.reservationID}"
 class Schedule(db.Model):
     __tablename__ = 'schedule'
     scheduleID = db.Column(db.String(50), primary_key=True)
@@ -287,28 +299,9 @@ class Invoice(db.Model):
     def __str__(self):
         return f"Invoice ID: {self.invoiceID}, Reservation: {self.reservation.reservationID}"
 
-class ReportRevenue(db.Model):
-    __tablename__ = 'reportRevenue'
-    reportID = db.Column(db.String(50), primary_key=True)
-    totalRevenue = db.Column(db.Float)
-    reportDateTime = db.Column(db.DateTime)
-    flightID = db.Column(db.String(50), db.ForeignKey('flight_detail.flightID'))
 
-    flight = db.relationship('FlightDetail', backref='revenue_reports')
 
-    def __str__(self):
-        return f"Report ID: {self.reportID}, Flight: {self.flight.flightID}"
 
-class CustomerFlight(db.Model):
-    __tablename__ = 'customer_flight'
-    customerID = db.Column(db.String(50), db.ForeignKey('customer.customerID'), primary_key=True)
-    flightID = db.Column(db.String(50), db.ForeignKey('flight_detail.flightID'), primary_key=True)
-
-    customer = db.relationship('Customer', backref='customer_flights')
-    flight = db.relationship('FlightDetail', backref='customer_flights')
-
-    def __str__(self):
-        return f"CustomerFlight - Customer: {self.customer.name}, Flight: {self.flight.flightID}"
 
 # Tạo một vai trò Admin và gán cho người dùng Admin
 def create_admin_role():
@@ -316,93 +309,39 @@ def create_admin_role():
     db.session.add(admin_role)
     db.session.commit()
 # Thêm dữ liệu mẫu
-def add_sample_data():
-    # Thêm người dùng
-    user1 = User(username='admin', email='admin@example.com', password='admin_pass', is_admin=True)
-    user2 = User(username='user1', email='user1@example.com', password='user1_pass')
-    user3 = User(username='user2', email='user2@example.com', password='user2_pass')
+    def add_sample_data():
+        # Serialize data to JSON
+        data = {
+            'roles': [role.__dict__ for role in Role.query.all()],
+            'users': [user.__dict__ for user in User.query.all()],
+            'admins': [admin.__dict__ for admin in Admin.query.all()],
+            'customers': [customer.__dict__ for customer in Customer.query.all()],
+            'logins': [login.__dict__ for login in Login.query.all()],
+            'confirmation_tokens': [token.__dict__ for token in ConfirmationToken.query.all()],
+            'employees': [employee.__dict__ for employee in Employee.query.all()],
+            'airports': [airport.__dict__ for airport in Airport.query.all()],
+            'routes': [route.__dict__ for route in Route.query.all()],
+            'report_revenues': [report.__dict__ for report in ReportRevenue.query.all()],
+            'customer_flights': [customer_flight.__dict__ for customer_flight in CustomerFlight.query.all()],
+            'aircrafts': [aircraft.__dict__ for aircraft in Aircraft.query.all()],
+            'flight_details': [flight.__dict__ for flight in FlightDetail.query.all()],
+            'promotions': [promotion.__dict__ for promotion in Promotion.query.all()],
+            'prices': [price.__dict__ for price in Price.query.all()],
+            'tickets': [ticket.__dict__ for ticket in Ticket.query.all()],
+            'bookings': [booking.__dict__ for booking in Booking.query.all()],
+            'payments': [payment.__dict__ for payment in Payment.query.all()],
+            'reviews': [review.__dict__ for review in Review.query.all()],
+            'schedules': [schedule.__dict__ for schedule in Schedule.query.all()],
+            'reservations': [reservation.__dict__ for reservation in Reservation.query.all()],
+            'reservation_histories': [history.__dict__ for history in ReservationHistory.query.all()],
+            'invoices': [invoice.__dict__ for invoice in Invoice.query.all()]
+            # ... add more entities as needed
+        }
 
-    db.session.add_all([user1, user2, user3])
-    db.session.commit()
+        # Write data to a JSON file
+        with open('data.json', 'w') as json_file:
+            json_file.write(json.dumps(data, default=str, indent=4))
 
-    # Thêm sân bay
-    airport1 = Airport(airportCode='AAA', airportName='Airport A')
-    airport2 = Airport(airportCode='BBB', airportName='Airport B')
-
-    db.session.add_all([airport1, airport2])
-    db.session.commit()
-
-    # Thêm tuyến bay
-    route1 = Route(routeID='R1', departureAirportCode='AAA', arrivalAirportCode='BBB', distance=1000, estimatedDuration=2)
-    route2 = Route(routeID='R2', departureAirportCode='BBB', arrivalAirportCode='AAA', distance=1000, estimatedDuration=2)
-
-    db.session.add_all([route1, route2])
-    db.session.commit()
-
-    # Thêm máy bay
-    aircraft1 = Aircraft(aircraftID='A1', model='Boeing 747', capacity=300, manufacturer='Boeing')
-    aircraft2 = Aircraft(aircraftID='A2', model='Airbus A320', capacity=150, manufacturer='Airbus')
-
-    db.session.add_all([aircraft1, aircraft2])
-    db.session.commit()
-
-    # Thêm chi tiết chuyến bay
-    flight1 = FlightDetail(flightID='F1', departureAirportCode='AAA', arrivalAirportCode='BBB',
-                           departureTime=datetime(2024, 1, 3, 12, 0, 0), arrivalTime=datetime(2024, 1, 3, 14, 0, 0),
-                           availableSeats=250, price=200, routeID='R1', aircraftID='A1')
-    flight2 = FlightDetail(flightID='F2', departureAirportCode='BBB', arrivalAirportCode='AAA',
-                           departureTime=datetime(2024, 1, 4, 12, 0, 0), arrivalTime=datetime(2024, 1, 4, 14, 0, 0),
-                           availableSeats=120, price=150, routeID='R2', aircraftID='A2')
-
-    db.session.add_all([flight1, flight2])
-    db.session.commit()
-
-    # Thêm khuyến mãi
-    promotion1 = Promotion(promotionID='P1', description='Discount 20%', discount=0.2,
-                           validityStartDate=datetime(2024, 1, 1), validityEndDate=datetime(2024, 1, 31),
-                           flightID='F1')
-    promotion2 = Promotion(promotionID='P2', description='Discount 15%', discount=0.15,
-                           validityStartDate=datetime(2024, 1, 1), validityEndDate=datetime(2024, 1, 31),
-                           flightID='F2')
-
-    db.session.add_all([promotion1, promotion2])
-    db.session.commit()
-
-    # Thêm giá
-    price1 = Price(priceID='Price1', basePrice=200, taxes=20, discount=0.2, promotionID='P1')
-    price2 = Price(priceID='Price2', basePrice=150, taxes=15, discount=0.15, promotionID='P2')
-
-    db.session.add_all([price1, price2])
-    db.session.commit()
-
-    # Thêm đặt chỗ
-    booking1 = Booking(bookingID='B1', customerID='user1', flightClass='Economy', paymentMethod='Credit Card',
-                       status='Confirmed', bookingDateTime=datetime(2024, 1, 1, 10, 0, 0), paymentID='Payment1',
-                       flightID='F1')
-    booking2 = Booking(bookingID='B2', customerID='user2', flightClass='Business', paymentMethod='PayPal',
-                       status='Pending', bookingDateTime=datetime(2024, 1, 2, 11, 0, 0), paymentID='Payment2',
-                       flightID='F2')
-
-    db.session.add_all([booking1, booking2])
-    db.session.commit()
-
-    # Thêm thanh toán
-    payment1 = Payment(paymentID='Payment1', amountPaid=180, paymentMethod='Credit Card',
-                       paymentStatus='Successful', paymentDateTime=datetime(2024, 1, 1, 12, 0, 0), bookingID='B1')
-    payment2 = Payment(paymentID='Payment2', amountPaid=120, paymentMethod='PayPal',
-                       paymentStatus='Pending', paymentDateTime=datetime(2024, 1, 2, 14, 0, 0), bookingID='B2')
-
-    db.session.add_all([payment1, payment2])
-    db.session.commit()
-
-    # Thêm đánh giá
-    review1 = Review(reviewID='Review1', reservationID='Reservation1', rating=4, feedback='Great service!',
-                     submittedBy='user1', submissionDateTime=datetime(2024, 1, 1, 15, 0, 0))
-    review2 = Review(reviewID='Review2', reservationID='Reservation2', rating=5, feedback='Excellent flight!',
-                     submittedBy='user2', submissionDateTime=datetime(2024, 1, 2, 16, 0, 0))
-
-    db.session.add_all([review1, review2])
-    db.session.commit()
 
 # Thêm dữ liệu mẫu
 #add_sample_data()
@@ -413,5 +352,5 @@ def create_tables():
     db.create_all()
 
 # Example of how to drop all tables
-def drop_tables():
-    db.drop_all()
+#def drop_tables():
+    #db.drop_all()
